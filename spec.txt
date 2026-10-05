@@ -1,0 +1,45 @@
+## Project 3: To-Do CLI Application
+
+### Goal
+
+Build a command-line task management application.
+
+### Core Features
+
+- Add task
+- Delete task
+- Mark task as completed
+- Edit task
+- View pending tasks
+- View completed tasks
+- Assign priority
+- Add due dates
+- Save tasks
+- Load tasks
+
+### Example Interface
+
+```text
+1. Add task
+2. View tasks
+3. Complete task
+4. Edit task
+5. Delete task
+6. Filter tasks
+7. Exit
+```
+
+### Learning Objectives
+
+- JSON
+- File persistence
+- CRUD operations
+- Functions
+- Data structures
+- Date/time handling
+- Input validation
+- Modular code organization
+
+### Key Learning Outcome
+
+Start thinking about how to structure an entire program rather than only solving individual coding problems.
