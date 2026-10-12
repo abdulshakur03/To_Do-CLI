@@ -35,6 +35,8 @@ def start(content):
                 add_task(content)
             case 2:
                 view_task(content)
+            case 3:
+                complete_task(content)
             case 5:
                 delete_task(content)
             case 7:
@@ -54,24 +56,23 @@ def add_task(content):
         if add_date == "y":
             d = get_date()
             today = date.today()
-            while True:
-                if d < today:
-                    print("Date cannot be from the past.\nPick a present date!")
-                    d = get_date()
-                else:
-                    break
+            while d < today:
+                print("Date cannot be from the past.\nPick a present date!")
+                d = get_date()
+            due_date = d.isoformat()
             break
+
         elif add_date == "n":
-            d = None
+            due_date = None
             break
         else:
-            print("Invalid Input. input: [y/n]: ")
+            print("Invalid Input. type: [y/n]: ")
 
     content[task_id] = {
         "task": task,
         "status": "pending",
         "priority": "low",
-        "due_date": d.isoformat(),
+        "due_date": due_date,
     }
 
 
@@ -86,8 +87,9 @@ def view_task(content):
 
     for index, (task_id, details) in enumerate(content.items(), start=1):
         print("_" * 70)
+        due = details["due_date"] or "-"
         print(
-            f"{index:<5} | {details["task"]:<20} | {details["status"]:<10} | {details["priority"]:<10} | {details["due_date"]:<10}"
+            f"{index:<5} | {details["task"]:<20} | {details["status"]:<10} | {details["priority"]:<10} | {due:<10}"
         )
 
 
@@ -130,8 +132,21 @@ def get_date():
             print("Invalid date. Use YYYY-MM-DD, e.g. 2026-10-11")
 
 
-# def add_date():
-#     prompt = get_date("")
+def complete_task(content):
+    if not content:
+        print("No Available Task")
+        return
+    view_task(content)
+
+    task_number = validate_input("\nEnter the task number to mark as completed: ")
+
+    task_keys = list(content.keys())
+    if 1 <= task_number <= len(task_keys):
+        task_key = task_keys[task_number - 1]
+        content[task_key]["status"] = "completed"
+        print(f"\n{content[task_key]["task"]} has been marked completed")
+    else:
+        print("Invalid task number")
 
 
 if __name__ == "__main__":
