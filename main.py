@@ -18,15 +18,17 @@ def main():
 def start(content):
     while True:
         print(f"\n{"="*30}TO-DO List{"="*30}")
-        print("""
-            "1. Add task"
-            "2. View tasks"
-            "3. Complete task"
-            "4. Edit task"
-            "5. Delete task"
-            "6. Filter tasks"
-            "7. Exit"
-            """)
+        print(
+            ""
+            "\n1. Add task\n"
+            "2. View tasks\n"
+            "3. Complete task\n"
+            "4. Edit task\n"
+            "5. Delete task\n"
+            "6. Filter tasks\n"
+            "7. Exit\n"
+            ""
+        )
 
         prompt = validate_input("Enter an option: ")
 
@@ -37,6 +39,8 @@ def start(content):
                 view_task(content)
             case 3:
                 complete_task(content)
+            case 4:
+                edit_task(content)
             case 5:
                 delete_task(content)
             case 7:
@@ -147,6 +151,54 @@ def complete_task(content):
         print(f"\n{content[task_key]["task"]} has been marked completed")
     else:
         print("Invalid task number")
+
+
+def edit_task(content):
+    if not content:
+        print("No Available Task")
+        return
+    view_task(content)
+    task_number = validate_input("\nEnter the task number you want to edit: ")
+    task_keys = list(content.keys())
+    if 1 <= task_number <= len(task_keys):
+        task_key = task_keys[task_number - 1]
+        print("\n1. Task\n2. Status\n3.Priority\n4.Due date")
+        edit_option = validate_input("\nEnter option to edit: ")
+        if edit_option == 1:
+            content[task_key]["task"] = get_input("\nTitle: ")
+            print(f"Task updated to: {content[task_key]["task"]}")
+        elif edit_option == 2:
+            if content[task_key]["status"] == "completed":
+                content[task_key]["status"] = "pending"
+            print("status updated")
+        elif edit_option == 3:
+            if content[task_key]["priority"] == "low":
+                content[task_key]["priority"] = "high"
+                print("Priority set to high")
+            else:
+                content[task_key]["priority"] = "low"
+                print("priority set to low")
+        elif edit_option == 4:
+            while True:
+                add_date = get_input("is there a due date? [y/n]: ").strip().lower()
+                if add_date == "y":
+                    d = get_date()
+                    today = date.today()
+                    while d < today:
+                        print("Date cannot be from the past.\nPick a present date!")
+                        d = get_date()
+                    content[task_key]["due_date"] = d.isoformat()
+                    print("Date updated")
+                    break
+
+                elif add_date == "n":
+                    content[task_key]["due_date"] = None
+                    print("Date updated")
+                    break
+                else:
+                    print("Invalid Input. type: [y/n]: ")
+        else:
+            print("Pick a valid option from [1-4]")
 
 
 if __name__ == "__main__":
