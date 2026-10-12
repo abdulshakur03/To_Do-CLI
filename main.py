@@ -17,6 +17,7 @@ def main():
 
 def start(content):
     while True:
+        print()
         print(f"\n{"="*30}TO-DO List{"="*30}")
         print(
             ""
@@ -199,6 +200,10 @@ def edit_task(content):
                     print("Invalid Input. type: [y/n]: ")
         else:
             print("Pick a valid option from [1-4]")
+
+
+def filter_task(content):
+    pass
 
 
 if __name__ == "__main__":
