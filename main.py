@@ -44,6 +44,8 @@ def start(content):
                 edit_task(content)
             case 5:
                 delete_task(content)
+            case 6:
+                filter_task(content)
             case 7:
                 print("operation canceled!")
                 break
@@ -203,7 +205,8 @@ def edit_task(content):
 
 
 def filter_task(content):
-    pass
+    print("Filter by:\n1. Status\n2. Priority")
+    user_prompt = validate_input("Pick an option to filter by: x")
 
 
 if __name__ == "__main__":
