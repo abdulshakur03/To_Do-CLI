@@ -44,6 +44,8 @@ def start(content):
                 edit_task(content)
             case 5:
                 delete_task(content)
+            case 6:
+                get_filtered_task(content)
             case 7:
                 print("operation canceled!")
                 break
@@ -56,6 +58,17 @@ def start(content):
 def add_task(content):
     task_id = str(uuid.uuid4())
     task = get_input("add task: ")
+    set_priority = get_input("Set task priority to h(High)/l(low): ")
+    if set_priority in ("high" or "h"):
+        priority = "high"
+        print("priority set to high")
+    elif set_priority in ("low" or "l"):
+        priority = "low"
+        print("priority set to low")
+    else:
+        priority = "low"
+        print("Invalid option detected:\npriority set to low")
+
     while True:
         add_date = get_input("is there a due date? [y/n]: ").strip().lower()
         if add_date == "y":
@@ -76,7 +89,7 @@ def add_task(content):
     content[task_id] = {
         "task": task,
         "status": "pending",
-        "priority": "low",
+        "priority": priority,
         "due_date": due_date,
     }
 
@@ -171,7 +184,10 @@ def edit_task(content):
         elif edit_option == 2:
             if content[task_key]["status"] == "completed":
                 content[task_key]["status"] = "pending"
-            print("status updated")
+                print("status set to pending")
+            else:
+                content[task_key]["status"] = "completed"
+                print("status set to completed")
         elif edit_option == 3:
             if content[task_key]["priority"] == "low":
                 content[task_key]["priority"] = "high"
@@ -202,8 +218,33 @@ def edit_task(content):
             print("Pick a valid option from [1-4]")
 
 
-def filter_task(content):
-    pass
+def get_filtered_task(content):
+    if not content:
+        print("No Available Task")
+        return
+    print(
+        "Filter by:\n1. Status(pending)\n2. Status(completed)\n3. Priority(low)\n4. Priority(High)\n"
+    )
+    user_prompt = validate_input("Input Filter Method: ")
+
+    if user_prompt == 1:
+        filter_task(content, "status", "pending")
+    elif user_prompt == 2:
+        filter_task(content, "status", "completed")
+    elif user_prompt == 3:
+        filter_task(content, "priority", "low")
+    elif user_prompt == 4:
+        filter_task(content, "priority", "high")
+    else:
+        print("Invalid option.\nSelect from (1) - (4) to Filter by Status OR Priority")
+
+
+def filter_task(content, field, target):
+    copied = {}
+    for key, value in content.items():
+        if value[field] == target:
+            copied[key] = value
+    view_task(copied)
 
 
 if __name__ == "__main__":
