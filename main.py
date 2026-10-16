@@ -25,7 +25,7 @@ def start(content):
             "2. View tasks\n"
             "3. Complete task\n"
             "4. Edit task\n"
-            "5. Delete task\n"
+            "5. Delete\n"
             "6. Filter tasks\n"
             "7. Exit\n"
             ""

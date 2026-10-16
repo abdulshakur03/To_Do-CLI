@@ -1,0 +1,4 @@
+1. don't allow blank input
+2. edit multiple fields before exiting
+3. picking an invalid number from edit does nothing
+clear terminal screen when operation is done  
